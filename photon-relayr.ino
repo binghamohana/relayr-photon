@@ -1,81 +1,86 @@
 #include "MQTT.h"
 
-#define DEVICE_ID "8627732b-3b00-4042-9d78-316e42856116"
-#define MQTT_USER "d8ac6b9e-0ba3-447f-9140-1beaefbd8702"
-#define MQTT_PASSWORD "M7YHyf8OF34c"
+//define your mqtt credentials
+#define DEVICE_ID "c36642b8-3327-4935-8f21-19a0196e7349" 
+#define MQTT_USER "c36642b8-3327-4935-8f21-19a0196e7349" 
+#define MQTT_PASSWORD "H_Ex02fQyBno"
 #define MQTT_SERVER "mqtt.relayr.io"
+#define MQTT_CLIENTID "photon-relayr" //can be anything else
 
 const int led = D7;
+unsigned long lastTime = 0;
 
-void callback(char *topic, byte *payload, unsigned int length);
+void callback(char* topic, byte* payload, unsigned int length);
 
-/**
- * if want to use IP address,
- * byte server[] = { XXX,XXX,XXX,XXX };
- * MQTT client(server, 1883, callback);
- * want to use domain name,
- * MQTT client("www.sample.com", 1883, callback);
- **/
-//MQTT client("server_name", 1883, callback);
-MQTT client(MQTT_SERVER,1883,callback );
+//create our mqtt client
+MQTT client(MQTT_SERVER,1883,callback);
 
-// recieve message
-void callback(char* topic, byte *payload, unsigned int length) {
+// define our callback method thats called on receiving data
+void callback(char* topic, byte* payload, unsigned int length) {
+
+    //blink for 1 second on receiving data
     blink(1000);
+    //store the received payload
     char p[length + 1];
     memcpy(p, payload, length);
     p[length] = NULL;
     String message(p);
-
     Serial.println(message);
 
-    if (message.equals("{\"\":\"RED\"}"))
+//change the photon's RGB LED according to payload received
+    if (message.equals("{\"Color\":\"RED\"}"))
         RGB.color(255, 0, 0);
-    else if (message.equals("{\"\":\"GREEN\"}"))
+    else if (message.equals("{\"Color\":\"GREEN\"}"))
         RGB.color(0, 255, 0);
-    else if (message.equals("{\"\":\"BLUE\"}"))
+    else if (message.equals("{\"Color\":\"BLUE\"}"))
         RGB.color(0, 0, 255);
     else
+    //if unexpected payload LED color to white
         RGB.color(255, 255, 255);
     delay(100);
 }
 
+void mqtt_connect(){
+  Serial.println("Connecting to mqtt server");
+  if(client.connect(MQTT_CLIENTID, MQTT_USER, MQTT_PASSWORD)) {
+    Serial.println("Connection success");
+
+    //subscribe to a topic, cmd in this case
+    client.subscribe("/v1/"DEVICE_ID"/cmd");
+  }
+  else { 
+    Serial.println("Connection failed, check your credentials or wifi");
+  }
+}
 
 void setup() {
     RGB.control(true);
     Serial.begin(9600);
-    Serial.println("Hello");
+    Serial.println("Hello There, I'm your photon!");
+    //setup our LED pin and connect to mqtt broker
     pinMode(led, OUTPUT);
-
-   // connect to the server
-   mqtt_connect();
+    mqtt_connect();
 }
 
 void loop() {
     if (client.isConnected()) {
         client.loop();
-        if (millis() - lastTime > 500) {
+        //publish every 2 seconds
+        if (millis() - lastTime > 2000) {
         lastTime = millis();
         publish();
       }
     } else {
+        //if connection lost, try to reconnect
       mqtt_connect();
     }
 }
 
-void mqtt_connect(){
-  Serial.println("Connecting to mqtt server");
-  if(client.connect("spark-photon-relayr", MQTT_USER, MQTT_PASSWORD)) }
-    Serial.println("Connection success");
-    client.subscribe("/v1/"DEVICE_ID"/cmd");
-  }
-  else { 
-    Serial.println("Connection failed");
-  }
-}
-
 void publish() {
-    client.publish("/v1/"DEVICE_ID"/data", "{\"up_ch_payload\":[1,2]}");
+    //publish to the out topic
+    client.publish("/v1/"DEVICE_ID"/data", "HII");
+    Serial.println("Publishing");
+    //100ms blink when publishing
     blink(100);
 }
 
