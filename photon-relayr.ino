@@ -9,6 +9,7 @@
 
 char message_buff[100];
 const int led = D7;
+const int sensor = A0;
 unsigned long lastTime = 0;
 
                                 // Set here the time in milliseconds between publications
@@ -85,7 +86,7 @@ void loop() {
 void publish() {
     //publish to the out topic
     String pubString = "{\"meaning\":\"gas level\", \"value\":";
-    pubString = pubString + analogRead(A0);
+    pubString = pubString + analogRead(sensor);
     pubString = pubString + "}";
     pubString.toCharArray(message_buff, pubString.length()+1);
     client.publish("/v1/"DEVICE_ID"/data", message_buff);
