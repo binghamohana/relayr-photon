@@ -78,7 +78,7 @@ void loop() {
 
 void publish() {
     //publish to the out topic
-    client.publish("/v1/"DEVICE_ID"/data", "HII");
+    client.publish("/v1/"DEVICE_ID"/data", "{\"meaning\":\"gas level\"}");
     Serial.println("Publishing");
     //100ms blink when publishing
     blink(100);
@@ -89,4 +89,4 @@ void blink(int time) {
     delay(time);               // wait for a second
     digitalWrite(led, LOW);    // turn the LED off by making the voltage LOW
     delay(time);
-}
+} 
