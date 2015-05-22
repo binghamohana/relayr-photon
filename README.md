@@ -6,11 +6,11 @@ This library also contains a short sample app to help you get started with this 
 
 ## Adding your Photon to the relayr cloud and receiving data-publishing credentials (curl)
 
-#### Open a curl terminal window and enter the following to register your photon: 
+1. Open a curl terminal window and enter the following to register your photon: 
 
 `curl -H "Content-Type: application/json" -H "Authorization: Bearer <your access token>" -X POST -d '{"name":"<your device name> ", "owner":"<your user id>"}' https://api.relayr.io/devices/`
 
-#### Next, use the following to receive credentials for publishing data:
+2. Next, use the following to receive credentials for publishing data:
 
 `curl -H "Content-Type: application/json" -H "Authorization: Bearer <your access token>" -X POST -d '{"transport":"mqtt"}' https://api.relayr.io/devices/<your device id retrieved from the previous step>/transmitter`
 
@@ -30,14 +30,16 @@ The response received would look similar to this:
     "integrationType": "wunderbar1"
     }  
 
-#### Add the credentials received to this part of the photon-relayr.ino code:
-
-    //define your mqtt credentials
-    #define DEVICE_ID "c36642b8-3327-4935-8f21-19a0196e7349" 
-    #define MQTT_USER "c36642b8-3327-4935-8f21-19a0196e7349" 
-    #define MQTT_PASSWORD "H_Ex02fQyBno"
-    #define MQTT_SERVER "mqtt.relayr.io"
-    #define MQTT_CLIENTID "photon-relayr" //can be anything else`
+3. Add the credentials received to this part of the photon-relayr.ino code:
+    
+    
+		//define your mqtt credentials
+	    #define DEVICE_ID "c36642b8-3327-4935-8f21-19a0196e7349" 
+	    #define MQTT_USER "c36642b8-3327-4935-8f21-19a0196e7349" 
+	    #define MQTT_PASSWORD "H_Ex02fQyBno"
+	    #define MQTT_SERVER "mqtt.relayr.io"
+	    #define MQTT_CLIENTID "photon-relayr" //can be anything else`
+ 
 
 ## Onboarding your Photon 
 
