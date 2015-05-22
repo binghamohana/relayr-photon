@@ -1,14 +1,20 @@
 #include "MQTT.h"
 
 //define your mqtt credentials
-#define DEVICE_ID "c36642b8-3327-4935-8f21-19a0196e7349" 
-#define MQTT_USER "c36642b8-3327-4935-8f21-19a0196e7349" 
+#define DEVICE_ID "c36642b8-3327-4935-8f21-19a0196e7349"
+#define MQTT_USER "c36642b8-3327-4935-8f21-19a0196e7349"
 #define MQTT_PASSWORD "H_Ex02fQyBno"
 #define MQTT_SERVER "mqtt.relayr.io"
 #define MQTT_CLIENTID "photon-relayr" //can be anything else
 
+char message_buff[100];
 const int led = D7;
 unsigned long lastTime = 0;
+
+                                // Set here the time in milliseconds between publications
+int publishingPeriod = 1000;    // ATTENTION !!!
+                                // DO NOT try to set values under 200 ms of the server
+                                // will kick you out
 
 void callback(char* topic, byte* payload, unsigned int length);
 
@@ -48,7 +54,7 @@ void mqtt_connect(){
     //subscribe to a topic, cmd in this case
     client.subscribe("/v1/"DEVICE_ID"/cmd");
   }
-  else { 
+  else {
     Serial.println("Connection failed, check your credentials or wifi");
   }
 }
@@ -59,14 +65,14 @@ void setup() {
     Serial.println("Hello There, I'm your photon!");
     //setup our LED pin and connect to mqtt broker
     pinMode(led, OUTPUT);
+    publishingPeriod = publishingPeriod > 200 ? publishingPeriod : 200;
     mqtt_connect();
 }
 
 void loop() {
     if (client.isConnected()) {
         client.loop();
-        //publish every 2 seconds
-        if (millis() - lastTime > 2000) {
+        if (millis() - lastTime > publishingPeriod) {
         lastTime = millis();
         publish();
       }
@@ -78,7 +84,11 @@ void loop() {
 
 void publish() {
     //publish to the out topic
-    client.publish("/v1/"DEVICE_ID"/data", "{\"meaning\":\"gas level\"}");
+    String pubString = "{\"meaning\":\"gas level\", \"value\":";
+    pubString = pubString + analogRead(A0);
+    pubString = pubString + "}";
+    pubString.toCharArray(message_buff, pubString.length()+1);
+    client.publish("/v1/"DEVICE_ID"/data", message_buff);
     Serial.println("Publishing");
     //100ms blink when publishing
     blink(100);
@@ -89,4 +99,4 @@ void blink(int time) {
     delay(time);               // wait for a second
     digitalWrite(led, LOW);    // turn the LED off by making the voltage LOW
     delay(time);
-} 
+}
