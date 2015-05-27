@@ -2,14 +2,15 @@
 <html>
 <head>
 	<title></title>
-	<link rel="stylesheet" src="styles.css">
-	<script src="bower_components/angular/angular.js"></script>
-	<script type="text/javascript" src="app.js"></script>
+	<script src="https://developer.relayr.io/relayr-browser-sdk.min.js"></script>
 </head>
-<body ng-app="gasDetector">
-	<div ng-controller='gasLevelController'>
-	 	<p> My gas level is {{gasLevel}} </p>
+<body>
+	<div>
+	 	<p id="test"> </p>
 	</div>
+	<button onclick="changeColor('RED')">RED</button>
+	<button onclick="changeColor('GREEN')">GREEN</button>
+	<button onclick="changeColor('BLUE')">BLUE</button>
 </body>
-<script src="https://developer.relayr.io/relayr-browser-sdk.min.js"></script>
+	<script type="text/javascript" src="app.js"></script>
 </html>
