@@ -8,11 +8,11 @@ This library also contains a short sample app to help you get started with this 
 
 1. Open a curl terminal window and enter the following to register your photon:
 
-`curl -H "Content-Type: application/json" -H "Authorization: Bearer <your access token>" -X POST -d '{"name":"<your device name> ", "owner":"<your user id>"}' https://api.relayr.io/devices/`
+	`curl -H "Content-Type: application/json" -H "Authorization: Bearer <your access token>" -X POST -d '{"name":"<your device name> ", "owner":"<your user id>"}' https://api.relayr.io/devices/`
 
 2. Next, use the following to receive credentials for publishing data:
 
-`curl -H "Content-Type: application/json" -H "Authorization: Bearer <your access token>" -X POST -d '{"transport":"mqtt"}' https://api.relayr.io/devices/<your device id retrieved from the previous step>/transmitter`
+	`curl -H "Content-Type: application/json" -H "Authorization: Bearer <your access token>" -X POST -d '{"transport":"mqtt"}' https://api.relayr.io/devices/<your device id retrieved from the previous step>/transmitter`
 
 The response received would look similar to this:
 
@@ -51,17 +51,20 @@ The response received would look similar to this:
 6. You can enter the credentials received in the first step into [this web tool](https://mqtt.relayr.io/) to see the data arriving. 
 7. Attach your own sensor to pin A0.
 8. Edit the publish method to send your sensor data in the {"meaning":"<meaning>","value":val} format.
-** The meaning parameter denotes the meaning of the reading transferred. Meaning can be temperature, humidity, luminosity, color etc.
+**The meaning parameter** denotes the meaning of the reading transferred. Meaning can be temperature, humidity, luminosity, color etc.
 9. Flash your new firmware onto the photon.
 
-## Example web client:
+## Example (Web Client)
 
-To quickly run the example web application, go to the /www folder inside your cloned repository and run:
+To quickly run the example web application, go to the */www* folder, inside your cloned repository and run:
 
 `python -m SimpleHTTPServer 8000`
 
-The example should now be available in: http://localhost:8000 and you should be able to see your new sensor's data.
-Click on any of the "red" "green" and "blue" buttons to send a "{"Color":<Color>}" payload to the photon and change its RGB LED's color. Have fun ;)!
+The example should now be available at: http://localhost:8000 and you should be able to see your new sensor's data.
+
+Click on any of the "red" "green" or "blue" buttons to send a "{"Color":<Color>}" payload to the photon and change its RGB LED color. 
+
+Have fun ;)!
 
 
 ## Debugging
