@@ -47,11 +47,12 @@ The response received would look similar to this:
 2. Login with your [Particle.io](https://www.particle.io) credentials
 3. Claim your photon through the mobile app or manually by following [these steps](http://docs.particle.io/connect/)
 4. Create your app on [build.particle.io](https://build.particle.io)
-5. Click on the “+” sign on the top left of your project and add 3 new files, **MQTT.CPP** , **MQTT.h** and **mqtt-relayr.ino**. Copy and paste their content from the [repository](https://www.github/relayr/relayr-photon)
-6. You can enter the credentials received in the first step into [this web tool](https://mqtt.relayr.io/) to see the data arriving. In the publish method use `client.publish("v1/"DEVICE_ID"/data","{\"meaning\":\"<your meaning here>\"}”);`**
-7. Flash the new firmware onto the photon.
-
+5. Click on the “+” sign on the top right of your project and add 3 new files, **MQTT.CPP** , **MQTT.h** and **mqtt-relayr.ino**. Copy and paste their content from the [repository](https://www.github/relayr/relayr-photon)
+6. You can enter the credentials received in the first step into [this web tool](https://mqtt.relayr.io/) to see the data arriving. 
+7. Attach your own sensor to pin A0.
+8. Edit the publish method to send your sensor data in the {"meaning":"<meaning>","value":val} format.
 ** The meaning parameter denotes the meaning of the reading transferred. Meaning can be temperature, humidity, luminosity, color etc.
+9. Flash your new firmware onto the photon.
 
 ## Example web client:
 
@@ -59,7 +60,8 @@ To quickly run the example web application, go to the /www folder inside your cl
 
 `python -m SimpleHTTPServer 8000`
 
-The example should now be available in: http://localhost:8000
+The example should now be available in: http://localhost:8000 and you should be able to see your new sensor's data.
+Click on any of the "red" "green" and "blue" buttons to send a "{"Color":<Color>}" payload to the photon and change its RGB LED's color. Have fun ;)!
 
 
 ## Debugging
