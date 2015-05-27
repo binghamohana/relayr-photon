@@ -31,7 +31,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
     memcpy(p, payload, length);
     p[length] = NULL;
     String message(p);
-    Serial.println(message);
+    Serial.println("Command Received: "+message);
 
 //handle message received
 //change the photon's RGB LED according to payload received
@@ -67,7 +67,7 @@ void setup() {
     pinMode(led, OUTPUT);
     //set 200ms as minimum publishing period
     publishingPeriod = publishingPeriod > 200 ? publishingPeriod : 200;
-    mqtt_connect();
+    mqtt_connect(); 
 }
 
 void loop() {
@@ -93,7 +93,7 @@ void publish() {
     pubString.toCharArray(message_buff, pubString.length()+1);
     //publish our json payload
     client.publish("/v1/"DEVICE_ID"/data", message_buff);
-    Serial.println("Publishing");
+    Serial.println("Publishing " + String(message_buff));
     //100ms blink when publishing
     blink(100);
 }
