@@ -1,15 +1,15 @@
 #include "MQTT.h"
 
 //define your mqtt credentials
-#define DEVICE_ID "c36642b8-3327-4935-8f21-19a0196e7349"
-#define MQTT_USER "c36642b8-3327-4935-8f21-19a0196e7349"
-#define MQTT_PASSWORD "H_Ex02fQyBno"
+#define DEVICE_ID "5439a96f-f58a-4ec2-ad3b-6f74526acaee" 
+#define MQTT_USER "5439a96f-f58a-4ec2-ad3b-6f74526acaee" 
+#define MQTT_PASSWORD "rCuF.1JgO7C0"
 #define MQTT_SERVER "mqtt.relayr.io"
 #define MQTT_CLIENTID "photon-relayr" //can be anything else
 
 char message_buff[100];
 const int led = D7;
-const int sensor = A0;
+const int sensorPin = A0;
 unsigned long lastTime = 0;
 
                                 // Set here the time in milliseconds between publications
@@ -85,9 +85,9 @@ void loop() {
 
 void publish() {
     //publish to the out topic
-    String pubString = "{\"meaning\":\"gas level\", \"value\":";
-    pubString = pubString + analogRead(sensor);
-    pubString = pubString + "}";
+    String pubString = "{\"meaning\":\"moisture\", \"value\":";
+    pubString += analogRead(sensorPin);
+    pubString += "}";
     pubString.toCharArray(message_buff, pubString.length()+1);
     client.publish("/v1/"DEVICE_ID"/data", message_buff);
     Serial.println("Publishing");
