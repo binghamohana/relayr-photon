@@ -19,6 +19,6 @@ var changeColor = function(color) {
     deviceId: devId,
     token: tok,
     command: {"Color":color}
-  }
+  };
   relayr.devices().sendCommand(device);
-}
+};
