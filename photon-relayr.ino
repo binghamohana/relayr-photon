@@ -14,10 +14,10 @@ char message_buff[100];
 unsigned long lastPublishTime = 0;
 unsigned long lastBlinkTime = 0;
 
-								// Set here the time in milliseconds between publications
-int publishingPeriod = 1000;    // ATTENTION !!!
-								// DO NOT try to set values under 200 ms of the server
-								// will kick you out
+										// Set here the time in milliseconds between publications
+int publishingPeriod = 1000;  // ATTENTION !!!
+										// DO NOT try to set values under 200 ms of the server
+										// will kick you out
 
 void callback(char* topic, byte* payload, unsigned int length);
 
