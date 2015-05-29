@@ -18,7 +18,7 @@ var changeColor = function(color) {
   var device = {
     deviceId: devId,
     token: token,
-    command: {"color":color.toUpperCase()}
+    command: {"color":color.toLowerCase()}
   };
   relayr.devices().sendCommand(device);
 };
