@@ -8,7 +8,7 @@ This library also contains a short sample app to help you get started with this 
 
 1. Open a curl terminal window and enter the following to register your photon:
 
-	`curl -H "Content-Type: application/json" -H "Authorization: Bearer <your access token>" -X POST -d '{"name":"<your device name> ", "owner":"<your user id>"}' https://api.relayr.io/devices/`
+	`curl -H "Content-Type: application/json" -H "Authorization: Bearer <your access token>" -X POST -d '{"name":"<your device name> ", "owner":"<your user id>", "integrationType":"wunderbar1"}' https://api.relayr.io/devices/`
 
 2. Next, use the following to receive credentials for publishing data:
 
