@@ -1,3 +1,5 @@
+// This #include statement was automatically added by the Spark IDE.
+#include "SparkJson/SparkJson.h"
 #include "MQTT.h"
 
 //define your mqtt credentials
@@ -35,20 +37,28 @@ void callback(char* topic, byte* payload, unsigned int length) {
 	Serial.println("topic: " + String(topic));
 	Serial.println("payload: " + message);
 	//call our method to do something with the payload received
-	handlePayload(message);
+	handlePayload(p);
 }
 
-void handlePayload(String message) {
-	//change the photon's RGB LED according to payload received
-	if (message.equals("{\"color\":\"red\"}"))
-		RGB.color(255, 0, 0);
-	else if (message.equals("{\"color\":\"green\"}"))
-		RGB.color(0, 255, 0);
-	else if (message.equals("{\"color\":\"blue\"}"))
-		RGB.color(0, 0, 255);
-	else
-	//if different payload change LED color to white
-		RGB.color(255, 255, 255);
+void handlePayload(char* payload) {
+     StaticJsonBuffer<200> jsonBuffer;
+     JsonObject& root = jsonBuffer.parseObject(payload);
+  if (!root.success()) {
+    Serial.println("json parsing failed");
+    return;
+  }
+  const char* command = root["command"];
+  if(String(command).equals("color"))
+  {
+    const char* color = root["value"];  
+        String s(color);
+        if(s.equals("red")) 
+        RGB.color(255,0,0);
+        else if(s.equals("blue"))
+        RGB.color(0,0,255);
+        else if(s.equals("green"))
+        RGB.color(0,255,0);
+  }
 }
 
 void mqtt_connect() {
@@ -90,13 +100,13 @@ void loop() {
 }
 
 void publish() {
-	//create our json payload
-	String pubString = "{\"meaning\":\"moisture\", \"value\":";
-	//read from the analog pin and add sensor data to payload
-	pubString += analogRead(sensorPin);
-	pubString += "}";
-	pubString.toCharArray(message_buff, pubString.length()+1);
-	//publish our json payload to the data topic
+  StaticJsonBuffer<100> pubJsonBuffer;
+  JsonObject& pubJson = pubJsonBuffer.createObject();
+  pubJson["meaning"] = "moisture";
+  pubJson["value"] = analogRead(sensorPin);
+	
+	char message_buff[100];
+   pubJson.printTo(message_buff, sizeof(message_buff));
 	client.publish("/v1/"DEVICE_ID"/data", message_buff);
 	Serial.println("Publishing " + String(message_buff));
 }
