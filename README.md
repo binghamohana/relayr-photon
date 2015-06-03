@@ -8,11 +8,11 @@ This library also contains a short sample app to help you get started with this 
 
 1. Open a curl terminal window and enter the following to register your photon:
 
-	`curl -H "Content-Type: application/json" -H "Authorization: Bearer <your access token>" -X POST -d '{"name":"<your device name> ", "owner":"<your user id>", "integrationType":"wunderbar1"}' https://api.relayr.io/devices/`
+    `curl -H "Content-Type: application/json" -H "Authorization: Bearer <your access token>" -X POST -d '{"name":"<your device name> ", "owner":"<your user id>", "integrationType":"wunderbar1"}' https://api.relayr.io/devices/`
 
 2. Next, use the following to receive credentials for publishing data:
 
-	`curl -H "Content-Type: application/json" -H "Authorization: Bearer <your access token>" -X POST -d '{"transport":"mqtt"}' https://api.relayr.io/devices/<your device id retrieved from the previous step>/transmitter`
+    `curl -H "Content-Type: application/json" -H "Authorization: Bearer <your access token>" -X POST -d '{"transport":"mqtt"}' https://api.relayr.io/devices/<your device id retrieved from the previous step>/transmitter`
 
 The response received would look similar to this:
 
@@ -30,16 +30,9 @@ The response received would look similar to this:
     "integrationType": "wunderbar1"
     }  
 
-3. Add the credentials received to this part of the photon-relayr.ino code:
+You should now be able to see your new device on the dashboard at https://developer.relayr.io/dashboard devices 
 
-
-		//define your mqtt credentials
-	    #define DEVICE_ID "c36642b8-3327-4935-8f21-19a0196e7349"
-	    #define MQTT_USER "c36642b8-3327-4935-8f21-19a0196e7349"
-	    #define MQTT_PASSWORD "H_Ex02fQyBno"
-	    #define MQTT_SERVER "mqtt.relayr.io"
-	    #define MQTT_CLIENTID "photon-relayr" //can be anything else`
-
+You can also enter the credentials received into [this web tool](https://mqtt.relayr.io/) to see the data arriving. 
 
 ## Onboarding your Photon
 
@@ -47,34 +40,44 @@ The response received would look similar to this:
 2. Login with your [Particle.io](https://www.particle.io) credentials
 3. Claim your photon through the mobile app or manually by following [these steps](http://docs.particle.io/connect/)
 4. Create your app on [build.particle.io](https://build.particle.io)
-5. Click on the “+” sign on the top right of your project and add 3 new files, **MQTT.CPP** , **MQTT.h** and **mqtt-relayr.ino**. Copy and paste their content from the [repository](https://www.github/relayr/relayr-photon)
-6. You can enter the credentials received in the first step into [this web tool](https://mqtt.relayr.io/) to see the data arriving. 
-7. Attach your own sensor to pin A0.
-8. Edit the publish method to send your sensor data in the {"meaning":"<meaning>","value":val} format.
+5. Go to the libraries tab in the particle IDE and import two libraries, 'MQTT' and 'SparkJson'. (if it doesn't work, you can manually add the files using the “+” sign on the top right of your project then copy paste their content)
+6. Copy and paste the example code in **mqtt-relayr.ino** from the [repository](https://www.github/relayr/relayr-photon).
+7. Update the following part of the code with your credentials received from the first step.
+    //define your mqtt credentials
+    #define DEVICE_ID "c36642b8-3327-4935-8f21-19a0196e7349"
+    #define MQTT_USER "c36642b8-3327-4935-8f21-19a0196e7349"
+    #define MQTT_PASSWORD "H_Ex02fQyBno"
+    #define MQTT_SERVER "mqtt.relayr.io"
+    #define MQTT_CLIENTID "photon-relayr" //can be anything else`
+8. Attach your own sensor pin A0. (in our case we used a moisture sensor)
+9. Update your JSON in the publish method at the line pubJson["meaning"] = "moisture"; with your new sensor's meaning. This will send your payload in the {"meaning":<meaning>,"value":<value>} format.
 **The meaning parameter** denotes the meaning of the reading transferred. Meaning can be temperature, humidity, luminosity, color etc.
-9. Flash your new firmware onto the photon.
+10. Flash your new firmware onto the photon.
 
 ## Example (Web Client)
 
+The example web application allows you to see your sensor's reading and change the colors of the RGB LED of the photon.
+
 To quickly run the example web application, go to the */www* folder, inside your cloned repository and run:
 
-`python -m SimpleHTTPServer 8000`
+`python -m SimpleHTTPServer 8000` or `python3 -m http.server 8000` if you're using python 3.x
 
 The example should now be available at: http://localhost:8000 and you should be able to see your new sensor's data.
 
-Click on any of the "red" "green" or "blue" buttons to send a "{"Color":<Color>}" payload to the photon and change its RGB LED color. 
+Click on any of the "red" "green" or "blue" buttons to send a "{"command":"color","value":<color>}" payload to the photon and change its RGB LED color. 
 
 Have fun ;)!
 
 
 ## Debugging
 
-You can use a serial monitor such as **Screen** or **Putty** for debugging:
-#### For Linux:
-screen /dev/ttyACM0 9600
-#### For MacOS:
-screen /dev/tty.usbmodem1411 9600
-#### For Windows:
-You can use putty. First find the the *COMM* name of the device and configure it for serial monitoring at 9600 bps before connecting.
+To see what's happening inside of the photon you can use a serial monitor such as **Screen** or **Putty** for debugging:
 
-In order to check which port your photon is connected to, use the Arduino IDE. Simply go to *tools -> ports* and check which port is listed under *Serial ports*.
+In order to check which port your photon is connected to, you can use the Arduino IDE. Simply go to *tools -> ports* and check which port is listed under *Serial ports*. Now you can listen to this port using one of the following:
+
+#### For Linux:
+screen /dev/ttyACMx 9600
+#### For MacOS:
+screen /dev/tty.usbmodem14xx 9600
+#### For Windows:
+You can use putty. First find the the *COMM* name of the device and configure it for serial monitoring at 9600 bps before connecting. You can also use Arduino's serial monitor.
