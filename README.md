@@ -42,17 +42,13 @@ You can also enter the credentials received into [this web tool](https://mqtt.re
 4. Create your app on [build.particle.io](https://build.particle.io)
 5. Go to the libraries tab in the particle IDE and import two libraries, 'MQTT' and 'SparkJson'. (if it doesn't work, you can manually add the files using the “+” sign on the top right of your project then copy paste their content)
 6. Copy and paste the example code in **mqtt-relayr.ino** from the [repository](https://www.github/relayr/relayr-photon).
-7. Update the following part of the code with your credentials received from the first step:
-
-
+7. Update the following part of the code with your credentials received from the first step.
     //define your mqtt credentials
     #define DEVICE_ID "c36642b8-3327-4935-8f21-19a0196e7349"
     #define MQTT_USER "c36642b8-3327-4935-8f21-19a0196e7349"
     #define MQTT_PASSWORD "H_Ex02fQyBno"
     #define MQTT_SERVER "mqtt.relayr.io"
     #define MQTT_CLIENTID "photon-relayr" //can be anything else`
-    
-    
 8. Attach your own sensor pin A0. (in our case we used a moisture sensor)
 9. Update your JSON in the publish method at the line pubJson["meaning"] = "moisture"; with your new sensor's meaning. This will send your payload in the {"meaning":<meaning>,"value":<value>} format.
 **The meaning parameter** denotes the meaning of the reading transferred. Meaning can be temperature, humidity, luminosity, color etc.
