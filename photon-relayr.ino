@@ -6,7 +6,7 @@
 #define MQTT_USER "5439a96f-f58a-4ec2-ad3b-6f74526acaee"
 #define MQTT_PASSWORD "rCuF.1JgO7C0"
 #define MQTT_SERVER "mqtt.relayr.io"
-#define MQTT_CLIENTID "photon-relayr" //can be anything else
+#define MQTT_CLIENTID "TabSzFRu0QDitavocegox8g"," //The  "clientId" given with the credentials
 
 const int sensorPin = A0;
 const int led = D7;
