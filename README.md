@@ -41,7 +41,7 @@ You can also enter the credentials received into [this web tool](https://mqtt.re
 3. Claim your photon through the mobile app or manually by following [these steps](http://docs.particle.io/connect/)
 4. Create your app on [build.particle.io](https://build.particle.io)
 5. Go to the libraries tab in the particle IDE and import two libraries, 'MQTT' and 'SparkJson'. (if it doesn't work, you can manually add the files using the “+” sign on the top right of your project then copy and paste their content)
-6. Copy and paste the example code under **mqtt-relayr.ino** in the [repository](https://www.github/relayr/relayr-photon).
+6. Copy and paste the example code under **mqtt-relayr.ino** in the [repository](https://www.github.com/relayr/relayr-photon).
 7. Update the following part of the code with the credentials received from the curl request.
     
 
