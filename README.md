@@ -4,6 +4,21 @@ Welcome to the relayr-Photon library. Following the code in this library you wou
 
 This library also contains a short sample app to help you get started with this integration.
 
+## Adding your Photon to the relayr cloud and receiving data-publishing credentials (Developer Dashboard)
+
+You are now able to add your prototype directly from the Developer Dashboard. 
+
+1. In the [My Devices](https://developer.relayr.io/dashboard/devices) page click the + sign on the bottom right part of the screen
+	
+	![](assets/AddDevice.png)
+
+2. Select 'Add Prototype'
+3. Give your prototype a name and hit Start Prototyping
+	
+	![](assets/NewDevice.png)
+4. Enter the credentials received in the respective places in your code
+	![](assets/Credentials.png)
+
 ## Adding your Photon to the relayr cloud and receiving data-publishing credentials (curl)
 
 1. Open a curl terminal window and enter the following to register your photon:
