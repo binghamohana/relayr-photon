@@ -10,14 +10,14 @@ You are now able to add your prototype directly from the Developer Dashboard.
 
 1. In the [My Devices](https://developer.relayr.io/dashboard/devices) page click the + sign on the bottom right part of the screen
 	
-	![](assets/AddDevice.png)
+
 
 2. Select 'Add Prototype'
 3. Give your prototype a name and hit Start Prototyping
 	
-	![](assets/NewDevice.png)
+	
 4. Enter the credentials received in the respective places in your code
-	![](assets/Credentials.png)
+	
 
 ## Adding your Photon to the relayr cloud and receiving data-publishing credentials (curl)
 
