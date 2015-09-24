@@ -9,41 +9,9 @@ This library also contains a short sample app to help you get started with this 
 You are now able to add your prototype directly from the Developer Dashboard. 
 
 1. In the [My Devices](https://developer.relayr.io/dashboard/devices) page click the + sign on the bottom right part of the screen
-	
-
-
 2. Select 'Add Prototype'
-3. Give your prototype a name and hit Start Prototyping
-	
-	
+3. Give your prototype a name and follow the instructions to add it
 4. Enter the credentials received in the respective places in your code
-	
-
-## Adding your Photon to the relayr cloud and receiving data-publishing credentials (curl)
-
-1. Open a curl terminal window and enter the following to register your photon:
-
-    `curl -H "Content-Type: application/json" -H "Authorization: Bearer <your access token>" -X POST -d '{"name":"<your device name> ", "owner":"<your user id>", "integrationType":"wunderbar1"}' https://api.relayr.io/devices/`
-
-2. Next, use the following to receive credentials for publishing data:
-
-    `curl -H "Content-Type: application/json" -H "Authorization: Bearer <your access token>" -X POST -d '{"transport":"mqtt"}' https://api.relayr.io/devices/<your device id retrieved from the previous step>/transmitter`
-
-The response received would look similar to this:
-
-    {
-    "id": "eabdb2ed-2375-4137-b006-da24c93c9507",
-    "secret": "na1R6Hn3dYg1",
-    "owner": "9210dce8-25da-4275-a73a-1383b9774255",
-    "name": "no transmitter  no model device",
-    "credentials": {
-    "user": "eabdb2ed-2375-4137-b006-da24c93c9507",
-    "password": "na1R6Hn3dYg1",
-    "clientId": "T6r2y7SN1QTewBtokyTyVBw",
-    "topic": "/v1/eabdb2ed-2375-4137-b006-da24c93c9507/"
-    },
-    "integrationType": "wunderbar1"
-    }  
 
 You should now be able to see your new device on the Developer Dashboard under [My Devices](https://developer.relayr.io/dashboard/devices)
 
